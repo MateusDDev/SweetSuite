@@ -27,5 +27,8 @@
         ]
       }
     }
-  ]
+  ],
+  "parserOptions": {
+    "project": "/home/spec/Downloads/Crud/frontend/tsconfig.json"
+  }
 }
