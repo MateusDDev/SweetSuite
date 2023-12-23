@@ -1,39 +1,35 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '../public/vite.svg';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Form from './components/Form';
+import Header from './components/Header';
+import Products from './components/Products';
+import { Product } from './types/api';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const getProducts = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/products');
+      setProducts(res.data);
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, [setProducts]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={ viteLogo } className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={ reactLogo } className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={ () => setCount((c) => c + 1) }>
-          count is
-          {' '}
-          {count}
-        </button>
-        <p>
-          Edit
-          {' '}
-          <code>src/App.tsx</code>
-          {' '}
-          and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ToastContainer autoClose={ 3000 } position={ toast.POSITION.BOTTOM_LEFT } />
+      <Header />
+      <Form />
+      <Products products={ products } />
     </>
   );
 }
