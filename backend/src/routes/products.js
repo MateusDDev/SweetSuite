@@ -21,7 +21,7 @@ router.get('/', async (_, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const [result] = await getProductsById(id);
+    const [[result]] = await getProductsById(id);
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -45,7 +45,7 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     updateProduct(product, id);
-    res.status(200).json({ message: `${product.name} atualizado com sucesso` });
+    res.status(200).json({ message: `Produto ${id} atualizado com sucesso` });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Ocorreu um erro ao atualizar o produto' });
@@ -53,11 +53,10 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  const product = req.body;
   const { id } = req.params;
   try {
     removeProduct(id);
-    res.status(200).json({ message: `${product.name} removido com sucesso` });
+    res.status(200).json({ message: 'Produto removido com sucesso' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Ocorreu um erro ao remover o produto' });

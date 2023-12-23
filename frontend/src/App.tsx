@@ -22,14 +22,17 @@ function App() {
 
   useEffect(() => {
     getProducts();
-  }, [setProducts]);
+  }, [setProducts, products]);
 
   return (
     <>
-      <ToastContainer autoClose={ 3000 } position={ toast.POSITION.BOTTOM_LEFT } />
       <Header />
       <Form />
-      <Products products={ products } />
+      <Products
+        products={ products }
+        setProducts={ setProducts }
+      />
+      <ToastContainer autoClose={ 3000 } position={ toast.POSITION.BOTTOM_LEFT } />
     </>
   );
 }

@@ -1,12 +1,29 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { Product } from '../types/api';
 
 type ProductsProps = {
-  products: Product[]
+  products: Product[],
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>,
 };
 
-function Products({ products }: ProductsProps) {
+function Products({ products, setProducts }: ProductsProps) {
+  const handleDelete = async (id: number) => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/products/${id}`);
+      const { message } = res.data;
+      const newProducts = products.filter((prod) => prod.id !== id);
+
+      setProducts(newProducts);
+      toast.success(message);
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error('Erro ao excluir o produto.');
+    }
+  };
+
   return (
     <table>
       <thead>
@@ -34,7 +51,7 @@ function Products({ products }: ProductsProps) {
               <FaEdit />
             </td>
             <td>
-              <FaTrash />
+              <FaTrash onClick={ () => handleDelete(prod.id) } />
             </td>
           </tr>
         ))}
