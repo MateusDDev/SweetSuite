@@ -5,11 +5,34 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+  text-decoration: none;
+  width: 100%;
   text-align: center;
-  background-color: #424651;
+  background-color: #141414;
+  color: #fafafa;
   font-family: 'Roboto', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #FFBA14;
+  transition: 0.6s;
+}
+
+a:hover {
+  color: #b8850e;
+}
+
+ul {
+  list-style: none;
+}
+
+h1 {
+  color: #FFBA14;
+  font-size: 40px;
+}
+
+h2 {
+  color: #FFBA14;
+  font-size: 35px;
 }

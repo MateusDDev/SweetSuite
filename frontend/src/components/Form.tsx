@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { NewProduct } from '../types/form';
+import style from './styles/Form.module.css';
 
 type FormProps = {
   playAxios: (prod: NewProduct) => Promise<void>,
@@ -36,46 +37,52 @@ function Form({ playAxios, submitName }: FormProps) {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <div>
-        <label>
-          Nome
+    <form onSubmit={ handleSubmit } className={ style.form }>
+      <div className={ style.fields }>
+        <label className={ style.label }>
+          <span className={ style.labelText }>Nome</span>
           <input
+            className={ style.input }
             type="text"
             name="name"
             value={ name }
             onChange={ ({ target }) => setName(target.value) }
           />
         </label>
-        <label>
-          Descrição
+        <label className={ style.label }>
+          <span className={ style.labelText }>Preço</span>
           <input
-            type="text"
-            name="description"
-            value={ description }
-            onChange={ ({ target }) => setDescription(target.value) }
-          />
-        </label>
-        <label>
-          Preço
-          <input
+            className={ style.input }
             type="text"
             name="price"
             value={ price }
             onChange={ ({ target }) => setPrice(target.value) }
           />
         </label>
-        <label>
-          Quantidade
+        <label className={ style.label }>
+          <span className={ style.labelText }>Quantidade</span>
           <input
+            className={ style.input }
             type="text"
             name="quantity"
             value={ quantity }
             onChange={ ({ target }) => setQuantity(target.value) }
           />
         </label>
+        <label className={ style.label }>
+          <span className={ style.labelText }>Descrição</span>
+          <input
+            className={ style.input }
+            type="text"
+            name="description"
+            value={ description }
+            onChange={ ({ target }) => setDescription(target.value) }
+          />
+        </label>
       </div>
-      <button type="submit">{submitName}</button>
+      <div className={ style.btnContainer }>
+        <button type="submit" className={ style.btn }>{submitName}</button>
+      </div>
     </form>
   );
 }

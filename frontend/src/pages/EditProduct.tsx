@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Product } from '../types/api';
+import { ProductType } from '../types/api';
 import { NewProduct } from '../types/form';
 import Form from '../components/Form';
+import style from './styles/EditProduct.module.css';
 
-function Edit() {
+function EditProduct() {
   const { id } = useParams();
-  const [product, setProduct] = useState<Product>();
+  const [product, setProduct] = useState<ProductType>();
 
   useEffect(() => {
     const data = async () => {
@@ -30,17 +31,19 @@ function Edit() {
   };
 
   return (
-    <main>
+    <main className={ style.main }>
       <h1>Editar Produto</h1>
       <Form playAxios={ playAxios } submitName="Atualizar" />
-      <h2>{product?.name}</h2>
-      <div>
-        <p>{product?.description}</p>
-        <p>{product?.price}</p>
-        <p>{product?.quantity}</p>
+      <div className={ style.product }>
+        <h2>{product?.name}</h2>
+        <div className={ style.info }>
+          <p>{`R$ ${product?.price}`}</p>
+          <p>{`${product?.quantity} disponíveis`}</p>
+          <p>{product?.description}</p>
+        </div>
       </div>
     </main>
   );
 }
 
-export default Edit;
+export default EditProduct;
