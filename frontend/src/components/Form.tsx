@@ -1,60 +1,81 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import { NewProduct } from '../types/form';
 
-function Form() {
-  const form = useRef<HTMLFormElement | null>(null);
+type FormProps = {
+  playAxios: (prod: NewProduct) => Promise<void>,
+  submitName: string,
+};
+
+function Form({ playAxios, submitName }: FormProps) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (form.current) {
-      const formData = new FormData(form.current);
-
-      const newProduct = {
-        name: formData.get('name') as string,
-        description: formData.get('description') as string,
-        price: formData.get('price') as string,
-        quantity: formData.get('quantity') as string,
-      };
-
-      if (!newProduct.description || !newProduct.name
-      || !newProduct.price || !newProduct.quantity) {
-        return toast.warning('Preencha todos os dados');
-      }
-
-      try {
-        const res = await axios.post('http://localhost:5000/products/', newProduct);
-        const { message } = res.data;
-        toast.success(message);
-      } catch (error: any) {
-        console.log(error);
-        toast.error('Erro ao cadastrar o produto.');
-      }
+    if (!name || !description || !price || !quantity) {
+      return toast.warning('Preencha todos os dados');
     }
+
+    const newProduct: NewProduct = {
+      name,
+      description,
+      price,
+      quantity,
+    };
+
+    playAxios(newProduct);
+
+    setName('');
+    setDescription('');
+    setPrice('');
+    setQuantity('');
   };
 
   return (
-    <form ref={ form } onSubmit={ handleSubmit }>
+    <form onSubmit={ handleSubmit }>
       <div>
         <label>
           Nome
-          <input type="text" name="name" />
+          <input
+            type="text"
+            name="name"
+            value={ name }
+            onChange={ ({ target }) => setName(target.value) }
+          />
         </label>
         <label>
           Descrição
-          <input type="text" name="description" />
+          <input
+            type="text"
+            name="description"
+            value={ description }
+            onChange={ ({ target }) => setDescription(target.value) }
+          />
         </label>
         <label>
           Preço
-          <input type="text" name="price" />
+          <input
+            type="text"
+            name="price"
+            value={ price }
+            onChange={ ({ target }) => setPrice(target.value) }
+          />
         </label>
         <label>
           Quantidade
-          <input type="number" name="quantity" />
+          <input
+            type="text"
+            name="quantity"
+            value={ quantity }
+            onChange={ ({ target }) => setQuantity(target.value) }
+          />
         </label>
       </div>
-      <button type="submit">Adicionar</button>
+      <button type="submit">{submitName}</button>
     </form>
   );
 }

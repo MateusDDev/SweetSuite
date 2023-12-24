@@ -45,7 +45,7 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     updateProduct(product, id);
-    res.status(200).json({ message: `Produto ${id} atualizado com sucesso` });
+    res.status(200).json({ message: `${product.name} atualizado com sucesso` });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Ocorreu um erro ao atualizar o produto' });

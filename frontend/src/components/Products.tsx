@@ -2,6 +2,7 @@
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { Product } from '../types/api';
 
 type ProductsProps = {
@@ -10,6 +11,8 @@ type ProductsProps = {
 };
 
 function Products({ products, setProducts }: ProductsProps) {
+  const navigate = useNavigate();
+
   const handleDelete = async (id: number) => {
     try {
       const res = await axios.delete(`http://localhost:5000/products/${id}`);
@@ -32,8 +35,6 @@ function Products({ products, setProducts }: ProductsProps) {
           <th>Descrição</th>
           <th>Preço</th>
           <th>Quantidade</th>
-          <th>Criado em</th>
-          <th>Atualizado em</th>
           <th />
           <th />
         </tr>
@@ -45,10 +46,8 @@ function Products({ products, setProducts }: ProductsProps) {
             <td>{prod.description}</td>
             <td>{prod.price}</td>
             <td>{prod.quantity}</td>
-            <td>{prod.created_at}</td>
-            <td>{prod.updated_at}</td>
             <td>
-              <FaEdit />
+              <FaEdit onClick={ () => navigate(`/edit/${prod.id}`) } />
             </td>
             <td>
               <FaTrash onClick={ () => handleDelete(prod.id) } />
