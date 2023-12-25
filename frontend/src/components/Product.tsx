@@ -33,13 +33,13 @@ function Product({ prod, products, setProducts }: ProductProps) {
       <div className={ style.info }>
         <h3>{prod.name}</h3>
         <p>{prod.description}</p>
-        <p>{`R$ ${prod.price}`}</p>
+        <p className={ style.price }>{`R$ ${prod.price}`}</p>
       </div>
       <div className={ style.icons }>
-        <span>
+        <span className={ style.icon }>
           <FaEdit onClick={ () => navigate(`/edit/${prod.id}`) } />
         </span>
-        <span>
+        <span className={ style.icon }>
           <FaTrash onClick={ () => handleDelete(prod.id) } />
         </span>
       </div>

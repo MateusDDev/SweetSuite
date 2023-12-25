@@ -5,20 +5,34 @@
   align-items: center;
   width: 25%;
   min-width: 200px;
-  height: 200px;
   border-radius: 12px;
   font-size: 19px;
-  padding: 0 35px;
+  padding: 25px 35px;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 15px;
+  margin-bottom: 14px;
+}
+
+.price {
+  color: rgb(255, 186, 20);
 }
 
 .icons {
   display: flex;
   gap: 8px;
+}
+
+.icon {
+  cursor: pointer;
+  color: #fafafa;
+  transition: 0.35s;
+}
+
+.icon:hover {
+  color: rgb(255, 186, 20);
 }
