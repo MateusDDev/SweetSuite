@@ -14,7 +14,7 @@ function Form({ playAxios, submitName }: FormProps) {
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!name || !description || !price || !quantity) {
@@ -28,7 +28,7 @@ function Form({ playAxios, submitName }: FormProps) {
       quantity,
     };
 
-    await playAxios(newProduct);
+    playAxios(newProduct);
 
     setName('');
     setDescription('');

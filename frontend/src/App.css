@@ -5,6 +5,7 @@
 }
 
 body {
+  cursor: default;
   text-decoration: none;
   width: 100%;
   text-align: center;
@@ -21,6 +22,10 @@ a {
 
 a:hover {
   color: #b8850e;
+}
+
+button {
+  cursor: pointer;
 }
 
 ul {

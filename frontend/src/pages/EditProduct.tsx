@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { ProductType } from '../types/api';
 import Form from '../components/Form';
 import style from './styles/EditProduct.module.css';
@@ -11,17 +11,25 @@ function EditProduct() {
   const [product, setProduct] = useState<ProductType>();
 
   useEffect(() => {
-    const data = async () => {
+    return () => {
+      window.location.reload();
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
       const res = await axios.get(`http://localhost:5000/products/${id}`);
       setProduct(res.data);
     };
-    data();
-  }, [id]);
+    fetch();
+  }, [id, setProduct]);
 
   const playAxios = async (prod: ProductType) => {
     try {
       const res = await axios.put(`http://localhost:5000/products/${id}`, prod);
       const { message } = res.data;
+
+      setProduct(prod);
       toast.success(message);
     } catch (error: any) {
       console.log(error);
