@@ -1,25 +1,11 @@
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Products from '../components/Products';
-import { ProductType } from '../types/api';
+import ProductsContext from '../context/ProductsContext';
 
 function Home() {
-  const [products, setProducts] = useState<ProductType[]>([]);
-
-  const getProducts = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/products');
-      setProducts(res.data);
-    } catch (error: any) {
-      toast.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, [setProducts]);
+  const { api } = useContext(ProductsContext);
+  const { products, setProducts } = api;
 
   return (
     <>

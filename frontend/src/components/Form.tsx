@@ -28,7 +28,7 @@ function Form({ playAxios, submitName }: FormProps) {
       quantity,
     };
 
-    playAxios(newProduct);
+    await playAxios(newProduct);
 
     setName('');
     setDescription('');
