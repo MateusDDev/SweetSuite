@@ -2,19 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useContext } from 'react';
 import { ProductType } from '../types/api';
 import style from './styles/Product.module.css';
+import ProductsContext from '../context/ProductsContext';
 
 type ProductProps = {
   prod: ProductType,
-  products: ProductType[],
-  setProducts: React.Dispatch<React.SetStateAction<ProductType[]>>,
 };
 
-function Product({ prod, products, setProducts }: ProductProps) {
+function Product({ prod }: ProductProps) {
+  const { api } = useContext(ProductsContext);
+  const { products, setProducts } = api;
   const navigate = useNavigate();
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number | undefined) => {
     try {
       const res = await axios.delete(`http://localhost:5000/products/${id}`);
       const { message } = res.data;

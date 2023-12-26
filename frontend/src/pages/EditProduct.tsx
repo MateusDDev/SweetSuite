@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ProductType } from '../types/api';
-import { NewProduct } from '../types/form';
 import Form from '../components/Form';
 import style from './styles/EditProduct.module.css';
 
@@ -19,7 +18,7 @@ function EditProduct() {
     data();
   }, [id]);
 
-  const playAxios = async (prod: NewProduct) => {
+  const playAxios = async (prod: ProductType) => {
     try {
       const res = await axios.put(`http://localhost:5000/products/${id}`, prod);
       const { message } = res.data;
