@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { NewProduct } from '../types/form';
 import style from './styles/Form.module.css';
+import { ProductType } from '../types/api';
 
 type FormProps = {
-  playAxios: (prod: NewProduct) => Promise<void>,
+  playAxios: (prod: ProductType) => Promise<void>,
   submitName: string,
 };
 
@@ -14,14 +14,14 @@ function Form({ playAxios, submitName }: FormProps) {
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!name || !description || !price || !quantity) {
       return toast.warning('Preencha todos os dados');
     }
 
-    const newProduct: NewProduct = {
+    const newProduct: ProductType = {
       name,
       description,
       price,

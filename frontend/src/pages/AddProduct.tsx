@@ -1,11 +1,18 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 import Form from '../components/Form';
-import { NewProduct } from '../types/form';
 import style from './styles/AddProduct.module.css';
+import { ProductType } from '../types/api';
 
 function AddProduct() {
-  const playAxios = async (prod: NewProduct) => {
+  useEffect(() => {
+    return () => {
+      window.location.reload();
+    };
+  }, []);
+
+  const playAxios = async (prod: ProductType) => {
     try {
       const res = await axios.post('http://localhost:5000/products', prod);
       const { message } = res.data;
