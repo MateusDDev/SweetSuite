@@ -4,7 +4,7 @@ const {
   addProduct, 
   updateProduct, 
   removeProduct, 
-  getProductsById } = require('../controllers/product');
+  getProductsById } = require('../services/product');
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   const product = req.body;
   try {
     addProduct(product);
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', (req, res) => {
   const product = req.body;
   const { id } = req.params;
   try {
@@ -52,7 +52,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
   try {
     removeProduct(id);
