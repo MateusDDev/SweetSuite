@@ -1,6 +1,8 @@
+/* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
 const jwt = require('jsonwebtoken');
 const express = require('express');
+const { getByUsername } = require('../services/user');
 
 const secret = process.env.JWT_SECRET;
 
@@ -10,10 +12,18 @@ router.post('/', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    if (!(username && password)) {
+    if (!username || !password) {
       const message = 'Insira o usuário e a senha';
 
       return res.status(401).json({ message });
+    }
+
+    const [[user]] = await getByUsername(username);
+
+    if (user.username !== username || user.password !== password) {
+      const message = 'Usuário ou senha inválidos';
+
+      return res.status(401).json(message);
     }
 
     const jwtConfig = {
@@ -22,16 +32,14 @@ router.post('/', async (req, res) => {
     };
 
     const data = {
-      username,
+      userId: user.id,
     };
 
     const token = jwt.sign({ data }, secret, jwtConfig);
 
     res.status(200).json({ token });
   } catch (error) {
-    console.log(error.message);
-    const message = 'Ocorreu um erro no servidor';
-    res.status(500).json({ message });
+    res.status(500).json({ message: error.message });
   }
 });
 
