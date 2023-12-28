@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-import Form from '../components/Form';
+import ProductsForm from '../components/ProductsForm';
 import style from './styles/AddProduct.module.css';
 import { ProductType } from '../types/api';
 
@@ -26,7 +26,7 @@ function AddProduct() {
   return (
     <main className={ style.main }>
       <h1>Novo Produto</h1>
-      <Form playAxios={ playAxios } submitName="Adicionar" />
+      <ProductsForm playAxios={ playAxios } submitName="Adicionar" />
     </main>
   );
 }

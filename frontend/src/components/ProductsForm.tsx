@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import style from './styles/Form.module.css';
+import style from './styles/ProductsForm.module.css';
 import { ProductType } from '../types/api';
 
 type FormProps = {
@@ -8,7 +8,7 @@ type FormProps = {
   submitName: string,
 };
 
-function Form({ playAxios, submitName }: FormProps) {
+function ProductsForm({ playAxios, submitName }: FormProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -87,4 +87,4 @@ function Form({ playAxios, submitName }: FormProps) {
   );
 }
 
-export default Form;
+export default ProductsForm;
