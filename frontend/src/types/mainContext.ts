@@ -2,13 +2,13 @@ import { ProductType, UserType } from './api';
 
 export type MainContextType = {
   authorization: {
-    token: string,
-    setToken: React.Dispatch<React.SetStateAction<string>>,
+    isAuthorized: boolean,
+    setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>,
   },
   api: {
     products: ProductType[],
     setProducts: React.Dispatch<React.SetStateAction<ProductType[]>>,
-    users: UserType[],
-    setUsers: React.Dispatch<React.SetStateAction<UserType[]>>,
+    user: UserType | undefined,
+    setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>,
   }
 };

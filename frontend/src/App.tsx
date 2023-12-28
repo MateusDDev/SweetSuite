@@ -6,13 +6,13 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Layout from './pages/components/Layout';
 import AddProduct from './pages/AddProduct';
-import ProductsProvider from './context/MainProvider';
+import MainProvider from './context/MainProvider';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
 function App() {
   return (
-    <ProductsProvider>
+    <MainProvider>
       <ToastContainer autoClose={ 3000 } position={ toast.POSITION.BOTTOM_LEFT } />
       <Routes>
         <Route path="/signin" element={ <SignIn /> } />
@@ -24,7 +24,7 @@ function App() {
         </Route>
         <Route path="/*" element={ <NotFound /> } />
       </Routes>
-    </ProductsProvider>
+    </MainProvider>
   );
 }
 

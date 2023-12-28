@@ -1,16 +1,31 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { UserType } from '../types/api';
+import useLocalStorage from '../hooks/useLocalStore';
+import MainContext from '../context/MainContext';
 
 type LoginFormProps = {
   submitName: string,
-  playAxios: any,
+  getForm: (data: UserType) => void,
 };
 
-function LoginForm({ submitName, playAxios }: LoginFormProps) {
+function LoginForm({ submitName, getForm }: LoginFormProps) {
+  const { authorization } = useContext(MainContext);
   const navigate = useNavigate();
+  const [, setToken] = useLocalStorage('token', '');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = async (user: UserType) => {
+    try {
+      const { data } = await axios.post('http://localhost:5000/login', user);
+      setToken(data.token);
+    } catch (error) {
+      return error;
+    }
+  };
 
   const handleSubmit = ((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,14 +34,18 @@ function LoginForm({ submitName, playAxios }: LoginFormProps) {
       return toast.warning('Preencha todos os dados');
     }
 
-    const user = {
+    const user: UserType = {
       username,
       password,
     };
 
-    playAxios(user);
+    getForm(user);
+    handleLogin(user);
 
-    navigate('/');
+    if (authorization.isAuthorized) {
+      navigate('/');
+    }
+    console.log(authorization.isAuthorized);
   });
 
   return (
@@ -38,7 +57,7 @@ function LoginForm({ submitName, playAxios }: LoginFormProps) {
         onChange={ ({ target }) => setUsername(target.value) }
       />
       <input
-        type="text"
+        type="password"
         placeholder="Senha"
         value={ password }
         onChange={ ({ target }) => setPassword(target.value) }

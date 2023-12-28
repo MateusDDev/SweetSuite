@@ -4,21 +4,15 @@ import { toast } from 'react-toastify';
 import { ProductType, UserType } from '../types/api';
 import { MainContextType } from '../types/mainContext';
 import MainContext from './MainContext';
-import useLocalStorage from '../hooks/useLocalStore';
 
-type ProductsProviderProps = {
+type MainProviderProps = {
   children: React.ReactNode;
 };
 
-function ProductsProvider({ children }: ProductsProviderProps) {
-  const [token, setToken] = useState('');
-  const [storedToken] = useLocalStorage('token', '');
+function MainProvider({ children }: MainProviderProps) {
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
-  const [users, setUsers] = useState<UserType[]>([]);
-
-  useEffect(() => {
-    setToken(storedToken);
-  }, [storedToken]);
+  const [user, setUser] = useState<UserType>();
 
   const getProducts = async () => {
     try {
@@ -35,14 +29,14 @@ function ProductsProvider({ children }: ProductsProviderProps) {
 
   const value: MainContextType = {
     authorization: {
-      token,
-      setToken,
+      isAuthorized,
+      setIsAuthorized,
     },
     api: {
       products,
       setProducts,
-      users,
-      setUsers,
+      user,
+      setUser,
     },
   };
 
@@ -53,4 +47,4 @@ function ProductsProvider({ children }: ProductsProviderProps) {
   );
 }
 
-export default ProductsProvider;
+export default MainProvider;

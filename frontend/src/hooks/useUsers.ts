@@ -19,8 +19,18 @@ function useUsers() {
     }
   };
 
+  const getUser = async () => {
+    try {
+      const { data } = await axios.get(`${LINK}/id`, { headers });
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+
   return {
     getUsers,
+    getUser,
   };
 }
 
