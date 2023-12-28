@@ -5,14 +5,14 @@ import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import { ProductType } from '../types/api';
 import style from './styles/Product.module.css';
-import ProductsContext from '../context/ProductsContext';
+import MainContext from '../context/MainContext';
 
 type ProductProps = {
   prod: ProductType,
 };
 
 function Product({ prod }: ProductProps) {
-  const { api } = useContext(ProductsContext);
+  const { api } = useContext(MainContext);
   const { products, setProducts } = api;
   const navigate = useNavigate();
 

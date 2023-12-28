@@ -4,7 +4,7 @@ function SignUp() {
   return (
     <main>
       <h1>Criar Conta</h1>
-      <LoginForm submitName="Criar" />
+      {/* <LoginForm submitName="Criar" /> */}
     </main>
   );
 }

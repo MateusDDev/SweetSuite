@@ -1,16 +1,24 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { ProductType } from '../types/api';
-import { ProductsContextType } from '../types/productsContext';
-import ProductsContext from './ProductsContext';
+import { ProductType, UserType } from '../types/api';
+import { MainContextType } from '../types/mainContext';
+import MainContext from './MainContext';
+import useLocalStorage from '../hooks/useLocalStore';
 
 type ProductsProviderProps = {
   children: React.ReactNode;
 };
 
 function ProductsProvider({ children }: ProductsProviderProps) {
+  const [token, setToken] = useState('');
+  const [storedToken] = useLocalStorage('token', '');
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [users, setUsers] = useState<UserType[]>([]);
+
+  useEffect(() => {
+    setToken(storedToken);
+  }, [storedToken]);
 
   const getProducts = async () => {
     try {
@@ -25,17 +33,23 @@ function ProductsProvider({ children }: ProductsProviderProps) {
     getProducts();
   }, [setProducts]);
 
-  const value: ProductsContextType = {
+  const value: MainContextType = {
+    authorization: {
+      token,
+      setToken,
+    },
     api: {
       products,
       setProducts,
+      users,
+      setUsers,
     },
   };
 
   return (
-    <ProductsContext.Provider value={ value }>
+    <MainContext.Provider value={ value }>
       {children}
-    </ProductsContext.Provider>
+    </MainContext.Provider>
   );
 }
 

@@ -2,7 +2,7 @@
 /* eslint-disable max-lines-per-function */
 const jwt = require('jsonwebtoken');
 const express = require('express');
-const { getByUsername } = require('../services/user');
+const { getUserByUsername } = require('../services/user');
 
 const secret = process.env.JWT_SECRET;
 
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
       return res.status(401).json({ message });
     }
 
-    const [[user]] = await getByUsername(username);
+    const [[user]] = await getUserByUsername(username);
 
     if (user.username !== username || user.password !== password) {
       const message = 'Usuário ou senha inválidos';
