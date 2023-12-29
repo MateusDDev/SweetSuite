@@ -1,16 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { useContext } from 'react';
 import EditProduct from './pages/EditProduct';
 import Home from './pages/Home';
 import Not from './pages/Not';
 import Layout from './pages/components/Layout';
 import AddProduct from './pages/AddProduct';
 import SignIn from './pages/SignIn';
-import useLocalStorage from './hooks/useLocalStore';
+import MainContext from './context/MainContext';
 
 function App() {
-  const [authorization] = useLocalStorage('authorization', '');
+  const { authorization } = useContext(MainContext);
+  const { user } = authorization;
+
   const title = 'Acesso não autorizado';
 
   return (
@@ -22,11 +25,11 @@ function App() {
           <Route index element={ <Home /> } />
           <Route
             path="addproduct"
-            element={ authorization ? <AddProduct /> : <Not title={ title } /> }
+            element={ user ? <AddProduct /> : <Not title={ title } /> }
           />
           <Route
             path="/edit/:id"
-            element={ authorization ? <EditProduct /> : <Not title={ title } /> }
+            element={ user ? <EditProduct /> : <Not title={ title } /> }
           />
         </Route>
         <Route path="/*" element={ <Not title="Página não encontrada" /> } />

@@ -6,15 +6,14 @@ import { useContext } from 'react';
 import { ProductType } from '../types/api';
 import style from './styles/Product.module.css';
 import MainContext from '../context/MainContext';
-import useLocalStorage from '../hooks/useLocalStore';
 
 type ProductProps = {
   prod: ProductType,
 };
 
 function Product({ prod }: ProductProps) {
-  const [authorization] = useLocalStorage('authorization', '');
-  const { api } = useContext(MainContext);
+  const { authorization, api } = useContext(MainContext);
+  const { user } = authorization;
   const { products, setProducts } = api;
   const navigate = useNavigate();
 
@@ -39,7 +38,7 @@ function Product({ prod }: ProductProps) {
         <p>{prod.description}</p>
         <p className={ style.price }>{`R$ ${prod.price}`}</p>
       </div>
-      {authorization && (
+      {user && (
         <div className={ style.icons }>
           <span className={ style.icon }>
             <FaEdit onClick={ () => navigate(`/edit/${prod.id}`) } />

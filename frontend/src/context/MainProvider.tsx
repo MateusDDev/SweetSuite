@@ -4,14 +4,16 @@ import { toast } from 'react-toastify';
 import { ProductType, UserType } from '../types/api';
 import { MainContextType } from '../types/mainContext';
 import MainContext from './MainContext';
+import useLocalStorage from '../hooks/useLocalStore';
 
 type MainProviderProps = {
   children: React.ReactNode;
 };
 
 function MainProvider({ children }: MainProviderProps) {
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [token] = useLocalStorage('token', '');
   const [user, setUser] = useState<UserType>();
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   const getUser = async (lastToken: string) => {
     try {
@@ -21,6 +23,14 @@ function MainProvider({ children }: MainProviderProps) {
       return console.error(response.data.message);
     }
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await getUser(token);
+      setUser(data);
+    };
+    fetch();
+  }, [token]);
 
   const getProducts = async () => {
     try {

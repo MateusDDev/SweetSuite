@@ -10,7 +10,12 @@ function useLocalStorage(key: string, initialValue: any) {
     localStorage.setItem(key, JSON.stringify(newValue));
   };
 
-  return [value, setStoredValue];
+  const removeStoredValue = () => {
+    setValue(initialValue);
+    localStorage.removeItem(key);
+  };
+
+  return [value, setStoredValue, removeStoredValue];
 }
 
 export default useLocalStorage;

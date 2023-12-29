@@ -1,10 +1,12 @@
+import { useContext } from 'react';
 import LoginForm from '../components/LoginForm';
-import useLocalStorage from '../hooks/useLocalStore';
+import MainContext from '../context/MainContext';
 
 function SignIn() {
-  const [authorization] = useLocalStorage('authorization', '');
+  const { authorization } = useContext(MainContext);
+  const { user } = authorization;
 
-  if (authorization) {
+  if (user) {
     return (
       <h1>Login realizado</h1>
     );
