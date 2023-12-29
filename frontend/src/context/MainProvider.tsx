@@ -13,6 +13,15 @@ function MainProvider({ children }: MainProviderProps) {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [user, setUser] = useState<UserType>();
 
+  const getUser = async (lastToken: string) => {
+    try {
+      const { data } = await axios.get('http://localhost:5000/users/id', { headers: { Authorization: `Bearer ${lastToken}` } });
+      return data;
+    } catch ({ response }: any) {
+      return console.error(response.data.message);
+    }
+  };
+
   const getProducts = async () => {
     try {
       const res = await axios.get('http://localhost:5000/products');
@@ -28,11 +37,14 @@ function MainProvider({ children }: MainProviderProps) {
   }, [setProducts]);
 
   const value: MainContextType = {
+    authorization: {
+      user,
+      setUser,
+      getUser,
+    },
     api: {
       products,
       setProducts,
-      user,
-      setUser,
     },
   };
 

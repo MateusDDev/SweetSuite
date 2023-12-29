@@ -18,7 +18,7 @@ function AddProduct() {
       const { message } = res.data;
       toast.success(message);
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       toast.error('Ocorreu um erro.');
     }
   };

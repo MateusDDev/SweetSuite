@@ -27,7 +27,7 @@ function Product({ prod }: ProductProps) {
       setProducts(newProducts);
       toast.success(message);
     } catch (error: any) {
-      console.log(error.message);
+      console.error(error.message);
       toast.error('Erro ao excluir o produto.');
     }
   };

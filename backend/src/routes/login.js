@@ -20,10 +20,10 @@ router.post('/', async (req, res) => {
 
     const [[user]] = await getUserByUsername(username);
 
-    if (user.username !== username || user.password !== password) {
+    if (!user || user.username !== username || user.password !== password) {
       const message = 'Usuário ou senha inválidos';
 
-      return res.status(401).json(message);
+      return res.status(401).json({ message });
     }
 
     const jwtConfig = {
