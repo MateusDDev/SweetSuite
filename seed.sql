@@ -34,11 +34,9 @@ VALUES
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(100) NOT NULL UNIQUE,
-  password VARCHAR(25) NOT NULL
+  password VARCHAR(70) NOT NULL
 );
 
 INSERT INTO users (username, password)
 VALUES
-  ('usuario1', 'senha1'),
-  ('usuario2', 'senha2'),
-  ('usuario3', 'senha3');
+  ('usuario', '$2b$10$KtZcW8ljC8opIlS9Gzr2zOEDx0vtLcNaUlufTEchjqTu52ePGszQO');

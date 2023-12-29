@@ -3,10 +3,16 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const { getUserByUsername } = require('../services/user');
+const { comparePasswords } = require('../services/loginServices');
 
 const secret = process.env.JWT_SECRET;
 
 const router = express.Router();
+
+const isValidPassword = async (username, newPassword) => {
+  const [[user]] = await getUserByUsername(username);
+  return user && comparePasswords(newPassword, user.password);
+};
 
 router.post('/', async (req, res) => {
   try {
@@ -18,11 +24,11 @@ router.post('/', async (req, res) => {
       return res.status(401).json({ message });
     }
 
-    const [[user]] = await getUserByUsername(username);
+    const validPassword = await isValidPassword(username, password);
 
-    if (!user || user.username !== username || user.password !== password) {
+    if (!validPassword) {
+      console.log(isValidPassword(username, password));
       const message = 'Usuário ou senha inválidos';
-
       return res.status(401).json({ message });
     }
 
@@ -30,6 +36,8 @@ router.post('/', async (req, res) => {
       expiresIn: '1h',
       algorithm: 'HS256',
     };
+
+    const [[user]] = await getUserByUsername(username);
 
     const data = {
       userId: user.id,
@@ -39,6 +47,7 @@ router.post('/', async (req, res) => {
 
     res.status(200).json({ token });
   } catch (error) {
+    console.log(error);
     res.status(404).json({ message: error.message });
   }
 });
