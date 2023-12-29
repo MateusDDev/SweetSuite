@@ -10,7 +10,6 @@ type MainProviderProps = {
 };
 
 function MainProvider({ children }: MainProviderProps) {
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [user, setUser] = useState<UserType>();
 
@@ -25,13 +24,10 @@ function MainProvider({ children }: MainProviderProps) {
 
   useEffect(() => {
     getProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setProducts]);
 
   const value: MainContextType = {
-    authorization: {
-      isAuthorized,
-      setIsAuthorized,
-    },
     api: {
       products,
       setProducts,

@@ -8,48 +8,74 @@ import MainContext from '../context/MainContext';
 
 type LoginFormProps = {
   submitName: string,
-  getForm: (data: UserType) => void,
 };
 
-function LoginForm({ submitName, getForm }: LoginFormProps) {
-  const { authorization } = useContext(MainContext);
+function LoginForm({ submitName }: LoginFormProps) {
   const navigate = useNavigate();
+  const { api } = useContext(MainContext);
+  const { setUser } = api;
+  const [, setAuthorization] = useLocalStorage('authorization', false);
   const [, setToken] = useLocalStorage('token', '');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (user: UserType) => {
+  const verifyLogin = (formUser: UserType, dbUser: UserType | undefined) => {
+    const checkLogin = formUser.username === dbUser?.username
+    && formUser.password === dbUser.password;
+
+    setAuthorization(checkLogin);
+    if (checkLogin === true) {
+      navigate('/');
+      window.location.reload();
+    }
+    return toast.error('Usuário ou senha incorretos');
+  };
+
+  const getUser = async (lastToken: string) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/login', user);
-      setToken(data.token);
+      const { data } = await axios.get('http://localhost:5000/users/id', { headers: { Authorization: `Bearer ${lastToken}` } });
+      setUser(data);
+      return data;
     } catch (error) {
       return error;
     }
   };
 
-  const handleSubmit = ((e: React.FormEvent<HTMLFormElement>) => {
+  const resolveToken = async (formUser: UserType) => {
+    try {
+      const { data } = await axios.post('http://localhost:5000/login', formUser);
+
+      if (data.token) {
+        setToken(data.token);
+        return data.token;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const handleSubmit = (async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!username || !password) {
       return toast.warning('Preencha todos os dados');
     }
 
-    const user: UserType = {
+    const formUser: UserType = {
       username,
       password,
     };
 
-    getForm(user);
-    handleLogin(user);
+    const token = await resolveToken(formUser);
+    const user = await getUser(token);
 
-    if (authorization.isAuthorized) {
-      navigate('/');
-    }
-    console.log(authorization.isAuthorized);
+    verifyLogin(formUser, user);
   });
 
   return (
-    <form onSubmit={ handleSubmit }>
+    <form
+      onSubmit={ handleSubmit }
+    >
       <input
         type="text"
         placeholder="Nome de Usuário"

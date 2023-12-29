@@ -1,41 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
-import useUsers from '../hooks/useUsers';
-import MainContext from '../context/MainContext';
-import { UserType } from '../types/api';
 import LoginForm from '../components/LoginForm';
+import useLocalStorage from '../hooks/useLocalStore';
 
 function SignIn() {
-  const { getUser } = useUsers();
-  const { api, authorization } = useContext(MainContext);
-  const { user, setUser } = api;
-  const [formData, setFormData] = useState<UserType>();
+  const [authorization] = useLocalStorage('authorization', '');
 
-  const verifyLogin = () => {
-    if (!user) return false;
-
-    return !(formData?.username !== user.username
-      || formData?.password !== user.password);
-  };
-
-  authorization.setIsAuthorized(verifyLogin());
-
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await getUser();
-      setUser(data);
-    };
-
-    fetch();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getForm = (data: UserType) => setFormData(data);
+  if (authorization) {
+    return (
+      <h1>Login realizado</h1>
+    );
+  }
 
   return (
     <main>
       <h1>Login</h1>
-      <LoginForm submitName="Entrar" getForm={ getForm } />
+      <LoginForm submitName="Entrar" />
     </main>
   );
 }

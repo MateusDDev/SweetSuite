@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import style from './NavBar.module.css';
+import useLocalStorage from '../../hooks/useLocalStore';
 
 function NavBar() {
+  const [authorization] = useLocalStorage('authorization', '');
+
   return (
     <nav className={ style.navbar }>
       <div className={ style.logo }>
@@ -9,7 +12,9 @@ function NavBar() {
       </div>
       <div className={ style.links }>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/addproduct">Adicionar Produto</NavLink>
+        {authorization && (
+          <NavLink to="/addproduct">Adicionar Produto</NavLink>
+        )}
       </div>
     </nav>
   );
