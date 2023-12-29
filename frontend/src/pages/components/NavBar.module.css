@@ -14,3 +14,14 @@
   gap: 15px;
   font-size: 19px;
 }
+
+.logOut {
+  cursor: pointer;
+  font-size: 22px;
+  color: #FFBA14;
+  transition: 0.6s;
+}
+
+.logOut:hover {
+  color: #b8850e;
+}

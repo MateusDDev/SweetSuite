@@ -25,6 +25,7 @@ a:hover {
 }
 
 button {
+  cursor: pointer;
   border: none;
   border-radius: 7px;
   width: 120px;

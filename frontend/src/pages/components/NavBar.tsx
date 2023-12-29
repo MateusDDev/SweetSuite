@@ -27,7 +27,7 @@ function NavBar() {
         {user && (
           <>
             <NavLink to="/addproduct">Adicionar Produto</NavLink>
-            <FiLogOut onClick={ handleLogOut } />
+            <FiLogOut className={ style.logOut } onClick={ handleLogOut } />
           </>
         )}
       </div>
