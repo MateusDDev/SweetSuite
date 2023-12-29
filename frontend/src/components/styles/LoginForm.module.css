@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 30%;
+  margin-top: 35px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.inputs {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 60%;
+  margin: 40px 0 20px 0;
+  gap: 10px;
+}
+
+.btn {
+  margin-bottom: 40px;
+}

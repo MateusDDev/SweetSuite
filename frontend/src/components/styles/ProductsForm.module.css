@@ -32,16 +32,7 @@
 }
 
 .input {
-  border-radius: 5px;
-  border: none;
-  height: 37px;
   width: 70%;
-  padding: 4px 0 4px 8px;
-  display: flex;
-  align-items: center;
-  color: #fafafa;
-  font-size: 15.4px;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .btnContainer {
@@ -51,18 +42,6 @@
 }
 
 .btn {
-  border: none;
-  border-radius: 7px;
-  width: 120px;
-  height: 28px;
-  font-size: 16px;
-  background-color: rgb(255, 186, 20);
-  color: #141414;
   margin-top: 19px;
   margin-right: 30%;
-  transition: 0.6s;
-}
-
-.btn:hover {
-  background-color: #b8850e;
 }

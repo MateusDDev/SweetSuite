@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserType } from '../types/api';
 import useLocalStorage from '../hooks/useLocalStore';
 import MainContext from '../context/MainContext';
+import style from './styles/LoginForm.module.css';
 
 type LoginFormProps = {
   submitName: string,
@@ -55,21 +56,28 @@ function LoginForm({ submitName }: LoginFormProps) {
 
   return (
     <form
+      className={ style.form }
       onSubmit={ handleSubmit }
     >
-      <input
-        type="text"
-        placeholder="Nome de Usuário"
-        value={ username }
-        onChange={ ({ target }) => setUsername(target.value) }
-      />
-      <input
-        type="password"
-        placeholder="Senha"
-        value={ password }
-        onChange={ ({ target }) => setPassword(target.value) }
-      />
-      <button>{submitName}</button>
+      <div className={ style.inputs }>
+        <input
+          className={ style.input }
+          type="text"
+          placeholder="Nome de Usuário"
+          value={ username }
+          onChange={ ({ target }) => setUsername(target.value) }
+        />
+        <input
+          className={ style.input }
+          type="password"
+          placeholder="Senha"
+          value={ password }
+          onChange={ ({ target }) => setPassword(target.value) }
+        />
+      </div>
+      <div>
+        <button className={ style.btn }>{submitName}</button>
+      </div>
     </form>
   );
 }

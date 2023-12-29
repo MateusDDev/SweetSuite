@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { useContext } from 'react';
 import style from './NavBar.module.css';
@@ -9,9 +9,11 @@ function NavBar() {
   const { authorization } = useContext(MainContext);
   const { user } = authorization;
   const [, , removeToken] = useLocalStorage('token', '');
+  const navigate = useNavigate();
 
   const handleLogOut = () => {
     removeToken();
+    navigate('/moderator');
     window.location.reload();
   };
 
