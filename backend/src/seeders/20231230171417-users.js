@@ -1,10 +1,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, _Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users', [
       {
         username: 'usuario',
         password: 'senha',
+        createdAt: Sequelize.literal('CURRENT_TIMESTAMP'),
+        updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     ]);
   },
