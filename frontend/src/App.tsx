@@ -1,26 +1,40 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { useContext } from 'react';
 import EditProduct from './pages/EditProduct';
 import Home from './pages/Home';
-import NotFound from './pages/NotFound';
+import Not from './pages/Not';
 import Layout from './pages/components/Layout';
 import AddProduct from './pages/AddProduct';
-import ProductsProvider from './context/ProductsProvider';
+import SignIn from './pages/SignIn';
+import MainContext from './context/MainContext';
 
 function App() {
+  const { authorization } = useContext(MainContext);
+  const { user } = authorization;
+
+  const title = 'Acesso não autorizado';
+
   return (
-    <ProductsProvider>
+    <>
       <ToastContainer autoClose={ 3000 } position={ toast.POSITION.BOTTOM_LEFT } />
       <Routes>
+        <Route path="/moderator" element={ <SignIn /> } />
         <Route path="/" element={ <Layout /> }>
           <Route index element={ <Home /> } />
-          <Route path="addproduct" element={ <AddProduct /> } />
-          <Route path="/edit/:id" element={ <EditProduct /> } />
+          <Route
+            path="addproduct"
+            element={ user ? <AddProduct /> : <Not title={ title } /> }
+          />
+          <Route
+            path="/edit/:id"
+            element={ user ? <EditProduct /> : <Not title={ title } /> }
+          />
         </Route>
-        <Route path="/*" element={ <NotFound /> } />
+        <Route path="/*" element={ <Not title="Página não encontrada" /> } />
       </Routes>
-    </ProductsProvider>
+    </>
   );
 }
 

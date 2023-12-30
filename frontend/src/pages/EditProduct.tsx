@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { ProductType } from '../types/api';
-import Form from '../components/Form';
+import ProductsForm from '../components/ProductsForm';
 import style from './styles/EditProduct.module.css';
 
 function EditProduct() {
@@ -32,7 +32,7 @@ function EditProduct() {
       setProduct(prod);
       toast.success(message);
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       toast.error('Ocorreu um erro.');
     }
   };
@@ -40,7 +40,7 @@ function EditProduct() {
   return (
     <main className={ style.main }>
       <h1>Editar Produto</h1>
-      <Form playAxios={ playAxios } submitName="Atualizar" />
+      <ProductsForm playAxios={ playAxios } submitName="Atualizar" />
       <div className={ style.product }>
         <h2>{product?.name}</h2>
         <div className={ style.info }>

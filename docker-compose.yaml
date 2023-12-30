@@ -24,20 +24,18 @@ services:
     depends_on:
       - mysql
     environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_PORT=3306
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=crud
+      MYSQL_HOST: 'mysql'
+    env_file:
+      - .env
     container_name: backend
 
   mysql:
-    image: mysql:8.0.34
+    image: mysql:8.0
     ports:
-      - "3306:3306"
+      - ${DB_PORT}:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=crud
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    env_file:
+      - .env
     container_name: mysql

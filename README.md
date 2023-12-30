@@ -26,17 +26,21 @@
     npm install
     ```
 
-4.  **Inicie os Containers com Docker Compose:**
+4.  **Configuração do Ambiente:**
+    - Crie um arquivo `.env` na raiz do projeto.
+    - Copie o conteúdo do arquivo `.env-example` e cole no arquivo recém-criado `.env` definindo as variáveis.
+
+5.  **Inicie os Containers com Docker Compose:**
     ```bash
     docker-compose up -d
     ```
     Isso iniciará os serviços necessários para o frontend e backend.
 
-5.  **Inicie uma Conexão com o MySQL:**
-    -   Acesse o MySQL utilizando o usuário `root` e senha `root`, ou altere essas configurações no arquivo `docker-compose.yaml`.
-    -   Na raiz do projeto, você encontrará um script de seed para criar a tabela no MySQL e um exemplo de inserção.
+6.  **Inicie uma Conexão com o MySQL:**
+    -   Acesse o MySQL utilizando o usuário e senha definidos no arquivo `.env`.
+    -   Na raiz do projeto, você encontrará um script de seed (`seed.sql`) para criar as tabelas no MySQL.
 
-6.  **Acesse as Aplicações:**
+7.  **Acesse as Aplicações:**
     -   Frontend: [http://localhost:4000](http://localhost:4000/)
     -   Backend: [http://localhost:5000/products](http://localhost:5000/products)
 

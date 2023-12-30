@@ -30,3 +30,14 @@ VALUES
   ('Mousse de Maracujá', 'Prepare um mousse aerado com suco de maracujá, leve à geladeira e sirva gelado.', 15.00, 15),
   ('Cupcake de Baunilha', 'Faça uma massa leve de baunilha, asse em forminhas e decore com um buttercream de baunilha.', 3.50, 25),
   ('Torta de Maçã', 'Prepare uma massa quebrada, faça o recheio com maçãs, asse e polvilhe canela por cima.', 20.50, 7);
+
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(70) NOT NULL
+);
+
+-- Senha = 'senha'
+INSERT INTO users (username, password)
+VALUES
+  ('usuario', '$2b$10$KtZcW8ljC8opIlS9Gzr2zOEDx0vtLcNaUlufTEchjqTu52ePGszQO');

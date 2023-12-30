@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import style from './styles/Products.module.css';
 import Product from './Product';
-import ProductsContext from '../context/ProductsContext';
+import MainContext from '../context/MainContext';
 
 function Products() {
-  const { api } = useContext(ProductsContext);
+  const { api } = useContext(MainContext);
   const { products } = api;
 
   return (

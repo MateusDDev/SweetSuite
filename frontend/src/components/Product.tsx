@@ -5,14 +5,15 @@ import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import { ProductType } from '../types/api';
 import style from './styles/Product.module.css';
-import ProductsContext from '../context/ProductsContext';
+import MainContext from '../context/MainContext';
 
 type ProductProps = {
   prod: ProductType,
 };
 
 function Product({ prod }: ProductProps) {
-  const { api } = useContext(ProductsContext);
+  const { authorization, api } = useContext(MainContext);
+  const { user } = authorization;
   const { products, setProducts } = api;
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ function Product({ prod }: ProductProps) {
       setProducts(newProducts);
       toast.success(message);
     } catch (error: any) {
-      console.log(error.message);
+      console.error(error.message);
       toast.error('Erro ao excluir o produto.');
     }
   };
@@ -37,14 +38,16 @@ function Product({ prod }: ProductProps) {
         <p>{prod.description}</p>
         <p className={ style.price }>{`R$ ${prod.price}`}</p>
       </div>
-      <div className={ style.icons }>
-        <span className={ style.icon }>
-          <FaEdit onClick={ () => navigate(`/edit/${prod.id}`) } />
-        </span>
-        <span className={ style.icon }>
-          <FaTrash onClick={ () => handleDelete(prod.id) } />
-        </span>
-      </div>
+      {user && (
+        <div className={ style.icons }>
+          <span className={ style.icon }>
+            <FaEdit onClick={ () => navigate(`/edit/${prod.id}`) } />
+          </span>
+          <span className={ style.icon }>
+            <FaTrash onClick={ () => handleDelete(prod.id) } />
+          </span>
+        </div>
+      )}
     </li>
   );
 }
