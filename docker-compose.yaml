@@ -25,6 +25,7 @@ services:
       - mysql
     environment:
       MYSQL_HOST: 'mysql'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     env_file:
       - .env
     container_name: backend
@@ -35,7 +36,6 @@ services:
       - ${DB_PORT}:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
     env_file:
       - .env
     container_name: mysql
