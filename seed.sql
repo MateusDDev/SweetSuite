@@ -37,6 +37,7 @@ CREATE TABLE users (
   password VARCHAR(70) NOT NULL
 );
 
+-- Senha = 'senha'
 INSERT INTO users (username, password)
 VALUES
   ('usuario', '$2b$10$KtZcW8ljC8opIlS9Gzr2zOEDx0vtLcNaUlufTEchjqTu52ePGszQO');
