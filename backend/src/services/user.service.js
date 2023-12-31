@@ -10,24 +10,30 @@ const getById = async (id) => {
   return user;
 };
 
-const update = async (newUser, id) => {
+const getByUsername = async (username) => {
+  const user = await User.findOne({ where: { username } });
+  return user;
+};
+
+const updateUser = async (newUser, id) => {
   const updatedUser = await User.update(newUser, { where: { id } });
   return updatedUser;
 };
 
-const create = async (newUser) => {
+const createUser = async (newUser) => {
   const user = await User.create(newUser);
   return user;
 };
 
-const remove = async (id) => {
+const removeUser = async (id) => {
   await User.destroy({ where: { id } });
 };
 
 module.exports = {
   getAll,
   getById,
-  update,
-  create,
-  remove,
+  getByUsername,
+  updateUser,
+  createUser,
+  removeUser,
 };
