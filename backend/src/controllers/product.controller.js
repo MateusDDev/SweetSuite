@@ -1,7 +1,5 @@
 const ProductService = require('../services/product.service');
 
-const error500Message = 'Algo deu errado';
-
 const getAll = async (_req, res) => {
   try {
     const products = await ProductService.getAll();
@@ -22,19 +20,19 @@ const getById = async (req, res) => {
     return res.status(200).json(product);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: error500Message });
+    return res.status(500).json({ message: 'Ocorreu um erro ao buscar o produto' });
   }
 };
 
 const createProduct = async (req, res) => {
   try {
     const product = req.body;
-    const newProduct = await ProductService.createProduct(product);
+    await ProductService.createProduct(product);
 
-    return res.status(201).json(newProduct);
+    return res.status(201).json({ message: `${product.name} adicionado com sucesso` });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: error500Message });
+    return res.status(500).json({ message: 'Ocorreu um erro ao adicionar o produto' });
   }
 };
 
@@ -42,12 +40,12 @@ const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const product = req.body;
-    const updatedProduct = await ProductService.updateProduct(product, id);
+    await ProductService.updateProduct(product, id);
 
-    return res.status(201).json(updatedProduct);
+    return res.status(201).json({ message: `${product.name} atualizado com sucesso` });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: error500Message });
+    return res.status(500).json({ message: 'Ocorreu um erro ao atualizar o produto' });
   }
 };
 
@@ -56,10 +54,10 @@ const removeProduct = async (req, res) => {
     const { id } = req.params;
     await ProductService.removeProduct(id);
 
-    return res.status(201).json({ message: 'Usuário excluído com sucesso' });
+    return res.status(201).json({ message: 'Produto excluído com sucesso' });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: error500Message });
+    return res.status(500).json({ message: 'Ocorreu um erro ao excluir o produto' });
   }
 };
 
