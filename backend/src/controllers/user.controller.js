@@ -1,4 +1,5 @@
 const UserService = require('../services/user.service');
+const { hashPassword } = require('../utils/handlePassword');
 
 const error500Message = 'Algo deu errado';
 
@@ -14,10 +15,8 @@ const getAll = async (_req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.user;
     const user = await UserService.getById(id);
-    
-    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
 
     res.status(200).json(user);
   } catch (error) {
@@ -29,7 +28,12 @@ const getById = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const user = req.body;
-    const newUser = await UserService.createUser(user);
+    const password = await hashPassword(user.password);
+    const addHash = {
+      ...req.body,
+      password,
+    };
+    const newUser = await UserService.createUser(addHash);
 
     return res.status(201).json(newUser);
   } catch (error) {

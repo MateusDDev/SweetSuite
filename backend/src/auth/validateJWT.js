@@ -3,7 +3,7 @@ const UserService = require('../services/user.service');
 
 const secret = process.env.JWT_SECRET;
 
-const extractToken = (bearerToken) => bearerToken.spli(' ')[1];
+const extractToken = (bearerToken) => bearerToken.split(' ')[1];
 
 module.exports = async (req, res, next) => {
   const bearerToken = req.header('Authorization');

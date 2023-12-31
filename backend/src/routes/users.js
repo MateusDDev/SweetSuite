@@ -10,6 +10,6 @@ router.use(validateJWT);
 
 router.get('/', getAll);
 
-router.get('/:id', getById);
+router.get('/id', getById);
 
 module.exports = router;
