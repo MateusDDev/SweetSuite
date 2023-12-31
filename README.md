@@ -30,21 +30,28 @@
     - Crie um arquivo `.env` na raiz do projeto.
     - Copie o conteúdo do arquivo `.env-example` e cole no arquivo recém-criado `.env` definindo as variáveis.
 
-5.  **Inicie os Containers com Docker Compose:**
+5.  **Inicie o MySQL e os Serviços Backend/Frontend:**
     ```bash
-    docker-compose up -d
+    docker-compose up -d mysql
     ```
-    Isso iniciará os serviços necessários para o frontend e backend.
+    Isso inicializará o serviço do MySQL. Em seguida, para concluir a configuração, execute os seguintes comandos:
 
-6.  **Inicie uma Conexão com o MySQL:**
-    -   Acesse o MySQL utilizando o usuário e senha definidos no arquivo `.env`.
-    -   Na raiz do projeto, você encontrará um script de seed (`seed.sql`) para criar as tabelas no MySQL.
+    **No diretório `backend`:**
+    ```bash
+    cd backend
+    env $(cat ../.env) npm run prestart && env $(cat ../.env) npm run dev
+    ```
 
-7.  **Acesse as Aplicações:**
+    **No diretório `frontend`:**
+    ```bash
+    cd ../frontend
+    npm run dev
+    ```
+
+6.  **Acesse as Aplicações:**
     -   Frontend: [http://localhost:4000](http://localhost:4000/)
     -   Backend: [http://localhost:5000/products](http://localhost:5000/products)
 
 ## Observações
 
 -   Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
--   Para encerrar os containers, você pode usar `docker-compose down`.
