@@ -16,6 +16,13 @@ function SearchProduct() {
   const handleSearch = async (q: string) => {
     try {
       const { data } = await axios.get(`http://localhost:5000/products/search?name=${q}`);
+
+      setQuery('');
+
+      if (data.length < 1 || !query) {
+        return toast.error('Nenhum produto encontrado');
+      }
+
       setQueryData(data);
     } catch ({ response }: any) {
       console.error(response);
