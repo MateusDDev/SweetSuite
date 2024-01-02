@@ -14,6 +14,7 @@ function MainProvider({ children }: MainProviderProps) {
   const [token] = useLocalStorage('token', '');
   const [user, setUser] = useState<UserType>();
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [queryData, setQueryData] = useState<ProductType[]>([]);
 
   const getUser = async (lastToken: string) => {
     try {
@@ -55,6 +56,8 @@ function MainProvider({ children }: MainProviderProps) {
     api: {
       products,
       setProducts,
+      queryData,
+      setQueryData,
     },
   };
 

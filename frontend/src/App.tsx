@@ -11,8 +11,11 @@ import SignIn from './pages/SignIn';
 import MainContext from './context/MainContext';
 
 function App() {
-  const { authorization } = useContext(MainContext);
+  const { authorization, api } = useContext(MainContext);
   const { user } = authorization;
+  const { queryData } = api;
+
+  console.log(queryData);
 
   const title = 'Acesso não autorizado';
 
