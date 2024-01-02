@@ -1,0 +1,60 @@
+.container {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ margin-top: 12px;
+}
+
+.inputContainer {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  height: 40px;
+  transition: 0.6s;
+}
+
+.showIptBorder {
+  border-radius: 10px;
+}
+
+.hideIptBorder {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.searchIcon {
+  margin: 10px 0px 0px 7px;
+  transition: 0.4s;
+}
+
+.showIcon {
+  cursor: text;
+}
+
+.hideIcon {
+  opacity: 0;
+  width: 0;
+}
+
+.searchBar {
+  background-color: transparent;
+  border: none;
+}
+
+.searchBar:focus-visible {
+  outline: none;
+}
+
+.searchBtn {
+  transition: 0.6s;
+}
+
+.showBtn {
+  width: 39px;
+  height: 39px;
+  border: none;
+  border-radius: 0px 10px 10px 0px;
+}
+
+.hideBtn {
+  width: 0;
+}
