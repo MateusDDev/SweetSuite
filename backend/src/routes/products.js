@@ -4,12 +4,15 @@ const {
   getById, 
   createProduct, 
   updateProduct,
-  removeProduct, 
+  removeProduct,
+  searchProduct, 
 } = require('../controllers/product.controller');
 
 const router = express.Router();
 
 router.get('/', getAll);
+
+router.get('/search', searchProduct);
 
 router.get('/:id', getById);
 
