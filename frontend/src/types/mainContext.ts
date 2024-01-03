@@ -9,5 +9,7 @@ export type MainContextType = {
   api: {
     products: ProductType[],
     setProducts: React.Dispatch<React.SetStateAction<ProductType[]>>,
+    queryData: ProductType[],
+    setQueryData: React.Dispatch<React.SetStateAction<ProductType[]>>,
   }
 };

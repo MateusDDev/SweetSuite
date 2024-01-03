@@ -5,17 +5,30 @@ import MainContext from '../context/MainContext';
 
 function Products() {
   const { api } = useContext(MainContext);
-  const { products } = api;
+  const { products, queryData, setQueryData } = api;
+
+  const hasResutls = queryData && queryData.length > 0;
+  const displayingProducts = hasResutls ? queryData : products;
 
   return (
-    <ul className={ style.products }>
-      {products.map((product) => (
-        <Product
-          key={ product.id }
-          prod={ product }
-        />
-      ))}
-    </ul>
+    <>
+      <button
+        className={
+        `${style.clear} ${hasResutls ? style.showClear : style.hideClear}`
+        }
+        onClick={ () => setQueryData([]) }
+      >
+        Limpar Pesquisa
+      </button>
+      <ul className={ style.products }>
+        {displayingProducts.map((product) => (
+          <Product
+            key={ product.id }
+            prod={ product }
+          />
+        ))}
+      </ul>
+    </>
   );
 }
 

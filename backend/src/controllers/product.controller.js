@@ -61,10 +61,23 @@ const removeProduct = async (req, res) => {
   }
 };
 
+const searchProduct = async (req, res) => {
+  try {
+    const { name } = req.query;
+    const product = await ProductService.searchProduct(name);
+
+    return res.status(200).json(product);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Ocorreu um erro ao buscar o produto' });
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
   removeProduct,
+  searchProduct,
 };
