@@ -46,13 +46,13 @@ function Product({ prod }: ProductProps) {
               <FaEdit onClick={ () => navigate(`/edit/${prod.id}`) } />
             </span>
             <span className={ style.icon }>
-              <FaTrash onClick={ () => setShowPopup(true) } />
+              <FaTrash onClick={ () => setShowPopup(!showPopup) } />
             </span>
           </div>
           {showPopup && (
-            <div>
+            <div className={ style.popup }>
               <p>Tem certeza que deseja deletar o produto?</p>
-              <div>
+              <div className={ style.buttons }>
                 <button onClick={ () => handleDelete(prod.id) }>Deletar</button>
                 <button onClick={ () => setShowPopup(false) }>Cancelar</button>
               </div>
