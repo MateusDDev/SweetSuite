@@ -1,10 +1,10 @@
 .product {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: 25%;
-  min-width: 200px;
+  min-width: 400px;
   border-radius: 12px;
   font-size: 19px;
   padding: 25px 35px;
@@ -35,4 +35,16 @@
 
 .icon:hover {
   color: rgb(255, 186, 20);
+}
+
+.popup {
+  color: rgb(255, 186, 20);
+  margin-top: 5px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 4px;
 }
