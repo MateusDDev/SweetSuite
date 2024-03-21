@@ -1,21 +1,79 @@
 {
+  "root": true,
   "env": {
-    "es2020": true
+    "browser": false,
+    "node": true,
+    "es2021": true,
+    "jest": true
   },
-  "extends": "trybe-backend",
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "@typescript-eslint/parser"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
   "rules": {
-    "sonarjs/no-duplicate-string": [
-      "error",
-      5
+    "no-underscore-dangle": "off",
+    "no-console": "off",
+    "camelcase": "warn",
+    "arrow-parens": [
+      2,
+      "always"
     ],
-    "indent": [
+    "quotes": [
+      2,
+      "single"
+    ],
+    "implicit-arrow-linebreak": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/naming-convention": [
       "error",
-      2
+      {
+        "selector": "property",
+        "format": [
+          "strictCamelCase"
+        ],
+        "filter": {
+          "regex": "^_",
+          "match": false
+        }
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/lines-between-class-members": [
+      "error",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "object-curly-newline": "off",
+    "max-lines": [
+      "error",
+      250
     ],
     "max-len": [
       "error",
+      100,
       {
-        "code": 100,
         "ignoreComments": true,
         "ignoreUrls": true
       }
