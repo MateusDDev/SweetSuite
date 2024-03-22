@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import Validations from '../middlewares/Validations';
 import ProductController from '../controllers/ProductController';
 
 const productController = new ProductController();
@@ -22,16 +23,19 @@ router.get(
 
 router.put(
   '/:id',
+  Validations.ValidateLogin,
   (req, res) => productController.updateProduct(req, res),
 );
 
 router.post(
   '/',
+  Validations.ValidateLogin,
   (req, res) => productController.createProduct(req, res),
 );
 
 router.delete(
   '/:id',
+  Validations.ValidateLogin,
   (req, res) => productController.removeProduct(req, res),
 );
 

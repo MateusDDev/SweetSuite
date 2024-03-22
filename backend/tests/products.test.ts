@@ -7,6 +7,7 @@ import { app } from '../src/app';
 import { Response } from 'superagent';
 import productsMock from './mocks/products.mock';
 import SequelizeProduct from '../src/database/models/SequelizeProduct';
+import JWT from '../src/utils/JWT';
 
 chai.use(chaiHttp);
 
@@ -14,8 +15,12 @@ const { expect } = chai;
 
 describe('Product tests', () => {
     let chaiHttpResponse: Response;
+    const token = 'ValidToken';
 
-    beforeEach(() => sinon.restore())
+    beforeEach(() => {
+        sinon.stub(JWT, 'sign').returns(token)
+        sinon.stub(JWT, 'verify').returns({ id: 1 })
+    })
 
     it('Should return all products', async () => {
         sinon.stub(SequelizeProduct, 'findAll').resolves(productsMock.products as any)
@@ -50,6 +55,7 @@ describe('Product tests', () => {
 
         chaiHttpResponse = await chai.request(app)
             .put('/products/1')
+            .set('authorization', token)
             .send(productsMock.newProduct);
 
         expect(chaiHttpResponse.status).to.be.equal(200);
@@ -61,6 +67,7 @@ describe('Product tests', () => {
 
         chaiHttpResponse = await chai.request(app)
             .put('/products/1')
+            .set('authorization', token)
             .send(productsMock.newProduct);
 
         expect(chaiHttpResponse.status).to.be.equal(400);
@@ -72,6 +79,7 @@ describe('Product tests', () => {
 
         chaiHttpResponse = await chai.request(app)
             .post('/products')
+            .set('authorization', token)
             .send(productsMock.newProduct);
 
         expect(chaiHttpResponse.status).to.be.equal(201);
@@ -81,7 +89,9 @@ describe('Product tests', () => {
     it('Should delete a product', async () => {
         sinon.stub(SequelizeProduct, 'destroy').resolves(1);
 
-        chaiHttpResponse = await chai.request(app).delete('/products/1')
+        chaiHttpResponse = await chai.request(app)
+            .delete('/products/1')
+            .set('authorization', token)
 
         expect(chaiHttpResponse.status).to.be.equal(204);
         expect(chaiHttpResponse.body).to.be.deep.equal({});
@@ -91,7 +101,9 @@ describe('Product tests', () => {
     it('Should return 404 if product id not exists when deleting the product', async () => {
         sinon.stub(SequelizeProduct, 'destroy').resolves(0);
 
-        chaiHttpResponse = await chai.request(app).delete('/products/99')
+        chaiHttpResponse = await chai.request(app)
+            .delete('/products/99')
+            .set('authorization', token)
 
         expect(chaiHttpResponse.status).to.be.equal(404);
         expect(chaiHttpResponse.body).to.be.deep.equal({ message: 'Product not found' });
