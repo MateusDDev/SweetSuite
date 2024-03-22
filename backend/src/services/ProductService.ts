@@ -26,7 +26,7 @@ export default class ProductService {
     const updatedProduct = await this.productModel.update(id, { ...newProduct });
 
     if (!updatedProduct) {
-      return { status: 'NOT_MODIFIED', data: { message: 'The product data was not modified' } };
+      return { status: 'BAD_REQUEST', data: { message: 'There is nothing to change' } };
     }
 
     return { status: 'SUCCESSFUL', data: updatedProduct };

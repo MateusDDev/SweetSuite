@@ -13,7 +13,6 @@ const mapStatusHTTP = (
     case 'UNAUTHORIZED': return 401;
     case 'CREATED': return 201;
     case 'UNPROCESSABLE_ENTITY': return 422;
-    case 'NOT_MODIFIED': return 304;
     default: return 500;
   }
 };
