@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import JWT from '../utils/JWT';
-import { ILogin, ILoginPayload, IToken } from '../interfaces/users/ILogin';
+import { ILogin, ILoginPayload, IToken } from '../interfaces/ILogin';
 import { ServiceResponse } from '../interfaces/ServiceResponse';
 import UserModel from '../models/UserModel';
 
@@ -38,7 +38,7 @@ export default class LoginService {
     }
 
     const payload: ILoginPayload = {
-      username,
+      id: user.id,
     };
 
     const token = this.jwtService.sign(payload);

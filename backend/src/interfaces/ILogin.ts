@@ -10,5 +10,5 @@ export interface IToken {
 }
 
 export interface ILoginPayload extends JwtPayload {
-  username: string
+  id: number
 }

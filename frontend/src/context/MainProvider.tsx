@@ -18,7 +18,7 @@ function MainProvider({ children }: MainProviderProps) {
 
   const getUser = async (lastToken: string) => {
     try {
-      const { data } = await axios.get('http://localhost:5000/users/id', { headers: { Authorization: `Bearer ${lastToken}` } });
+      const { data } = await axios.get('http://localhost:5000/user/', { headers: { Authorization: `Bearer ${lastToken}` } });
       return data;
     } catch ({ response }: any) {
       return console.error(response.data.message);
