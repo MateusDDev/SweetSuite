@@ -11,6 +11,11 @@ router.get(
 );
 
 router.get(
+  '/search',
+  (req, res) => productController.findAllProductsByName(req, res),
+);
+
+router.get(
   '/:id',
   (req, res) => productController.findProductById(req, res),
 );
@@ -23,6 +28,11 @@ router.put(
 router.post(
   '/',
   (req, res) => productController.createProduct(req, res),
+);
+
+router.delete(
+  '/:id',
+  (req, res) => productController.removeProduct(req, res),
 );
 
 export default router;

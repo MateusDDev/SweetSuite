@@ -6,6 +6,6 @@ export interface IProductModel {
   findById(id: number): Promise<IProduct | null>;
   update(id: number, newProduct: Partial<NewEntity<IProduct>>): Promise<IProduct | null>;
   create(newProduct: NewEntity<IProduct>): Promise<IProduct>;
-  remove(id: number): Promise<true | null>;
+  remove(id: number): Promise<number | null>;
   findAllByName(productName: string): Promise<IProduct[] | null>;
 }

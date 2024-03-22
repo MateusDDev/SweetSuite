@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import SequelizeProduct from '../database/models/SequelizeProduct';
 import { NewEntity } from '../interfaces/NewEntity';
 import { IProduct } from '../interfaces/products/IProduct';
@@ -30,18 +31,20 @@ export default class ProductModel implements IProductModel {
     return product;
   }
 
-  async remove(id: number): Promise<true | null> {
+  async remove(id: number): Promise<number | null> {
     const affectedRows = await this.model.destroy({ where: { id } });
 
     if (affectedRows === 0) return null;
 
-    return true;
+    return affectedRows;
   }
 
   async findAllByName(productName: string): Promise<IProduct[] | null> {
-    const products = await this.model.findAll({ where: { name: productName } });
+    const products = await this.model.findAll({ where: {
+      name: { [Op.like]: `%${productName}%` },
+    } });
 
-    if (!products) return null;
+    if (!products || products.length === 0) return null;
 
     return products;
   }

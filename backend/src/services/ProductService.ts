@@ -1,4 +1,4 @@
-import { ServiceResponse } from '../interfaces/ServiceResponse';
+import { MessageType, ServiceResponse } from '../interfaces/ServiceResponse';
 import { IProduct } from '../interfaces/products/IProduct';
 import ProductModel from '../models/ProductModel';
 import { NewEntity } from '../interfaces/NewEntity';
@@ -36,5 +36,23 @@ export default class ProductService {
     const product = await this.productModel.create(newProduct);
 
     return { status: 'CREATED', data: product };
+  }
+
+  async remove(id: number): Promise<ServiceResponse<MessageType>> {
+    const affectedRows = await this.productModel.remove(id);
+
+    if (!affectedRows) return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+
+    return { status: 'NO_CONTENT', data: { message: '' } };
+  }
+
+  async findAllByName(productName: string): Promise<ServiceResponse<IProduct[]>> {
+    const products = await this.productModel.findAllByName(productName);
+
+    if (!products) {
+      return { status: 'NOT_FOUND', data: { message: 'No products found with the provided name' } };
+    }
+
+    return { status: 'SUCCESSFUL', data: products };
   }
 }

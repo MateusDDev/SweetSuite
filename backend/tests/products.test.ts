@@ -15,6 +15,8 @@ const { expect } = chai;
 describe('Product tests', () => {
     let chaiHttpResponse: Response;
 
+    beforeEach(() => sinon.restore())
+
     it('Should return all products', async () => {
         sinon.stub(SequelizeProduct, 'findAll').resolves(productsMock.products as any)
 
@@ -74,6 +76,40 @@ describe('Product tests', () => {
 
         expect(chaiHttpResponse.status).to.be.equal(201);
         expect(chaiHttpResponse.body).to.be.deep.equal(productsMock.product);
+    });
+
+    it('Should delete a product', async () => {
+        sinon.stub(SequelizeProduct, 'destroy').resolves(1);
+
+        chaiHttpResponse = await chai.request(app).delete('/products/1')
+
+        expect(chaiHttpResponse.status).to.be.equal(204);
+        expect(chaiHttpResponse.body).to.be.deep.equal({});
+    });
+
+
+    it('Should return 404 if product id not exists when deleting the product', async () => {
+        sinon.stub(SequelizeProduct, 'destroy').resolves(0);
+
+        chaiHttpResponse = await chai.request(app).delete('/products/99')
+
+        expect(chaiHttpResponse.status).to.be.equal(404);
+        expect(chaiHttpResponse.body).to.be.deep.equal({ message: 'Product not found' });
+    });
+
+    it('Should return all products by name', async () => {
+        const expectedResult = [
+            { id: 2, name: 'Brigadeiro Gourmet', description: 'Brigadeiro gourmet feito com chocolate belga e granulado de chocolate.', price: 1.75, quantity: 30 },
+            { id: 3, name: 'Brigadeiro Tradicional', description: 'Brigadeiro tradicional brasileiro, delicioso e cremoso.', price: 1.50, quantity: 20 },
+            { id: 4, name: 'Brigadeiro de Leite Ninho', description: 'Brigadeiro feito com leite em pó, cremoso e saboroso.', price: 2.00, quantity: 25 }
+        ]
+        sinon.stub(SequelizeProduct, 'findAll').resolves(expectedResult as any);
+
+        chaiHttpResponse = await chai.request(app).get('/products/search?name=Brigadeiro')
+
+
+        expect(chaiHttpResponse.status).to.be.equal(200);
+        expect(chaiHttpResponse.body).to.be.deep.equal(expectedResult);
     });
 
     afterEach(() => {
