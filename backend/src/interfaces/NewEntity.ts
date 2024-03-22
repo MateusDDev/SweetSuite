@@ -1,1 +1,1 @@
-export type INewEntity<T> = Omit<T, 'id'>;
+export type NewEntity<T> = Omit<T, 'id'>;

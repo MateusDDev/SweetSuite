@@ -1,6 +1,6 @@
 export type ServiceResponseErrorMessages =
     'UNAUTHORIZED' | 'NOT_FOUND' | 'CONFLICT' | 'BAD_REQUEST' |
-    'UNPROCESSABLE_ENTITY';
+    'UNPROCESSABLE_ENTITY' | 'NOT_MODIFIED';
 export type ServiceResponseSuccessMessages = 'SUCCESSFUL' |
 'CREATED';
 

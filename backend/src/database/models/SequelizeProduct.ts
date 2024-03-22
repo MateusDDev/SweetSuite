@@ -28,16 +28,15 @@ SequelizeProduct.init({
   },
   description: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   price: {
-    type: DataTypes.DECIMAL,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-    defaultValue: 0,
   },
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 0,
   },
 }, {
   sequelize: db,
