@@ -1,29 +1,26 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { FaSearch } from 'react-icons/fa';
 import { useContext, useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import style from './styles/SearchProducts.module.css';
 import MainContext from '../context/MainContext';
+import { requestData } from '../services/request';
 
 function SearchProduct() {
   const [isFocus, setIsFocus] = useState(false);
   const [query, setQuery] = useState('');
-  const { api } = useContext(MainContext);
-  const { setQueryData } = api;
+  const { setQueryData } = useContext(MainContext);
 
   const handleSearch = async (q: string) => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/products/search?name=${q}`);
+      const products = await requestData(`/products/search?name=${q}`);
 
       setQuery('');
 
-      if (data.length < 1 || !query) {
+      if (products.length < 1 || !query) {
         return toast.error('Nenhum produto encontrado');
       }
 
-      setQueryData(data);
+      setQueryData(products);
     } catch ({ response }: any) {
       console.error(response);
       toast.error(response.data.message);

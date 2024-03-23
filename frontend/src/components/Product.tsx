@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useContext, useState } from 'react';
-import { ProductType } from '../types/api';
 import style from './styles/Product.module.css';
 import MainContext from '../context/MainContext';
+import { ProductType } from '../types/ProductTypes';
+import api from '../services/request';
+import { LoginContext } from '../context/LoginContext';
 
 type ProductProps = {
   prod: ProductType,
@@ -13,19 +14,17 @@ type ProductProps = {
 
 function Product({ prod }: ProductProps) {
   const navigate = useNavigate();
-  const { authorization, api } = useContext(MainContext);
-  const { user } = authorization;
-  const { products, setProducts } = api;
+  const { isAuthenticated } = useContext(LoginContext);
+  const { products, setProducts } = useContext(MainContext);
   const [showPopup, setShowPopup] = useState(false);
 
   const handleDelete = async (id: number | undefined) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/products/${id}`);
-      const { message } = res.data;
+      await api.delete(`/products/${id}`);
       const newProducts = products.filter((item) => item.id !== id);
 
       setProducts(newProducts);
-      toast.success(message);
+      toast.success('Produto deletado com sucesso');
     } catch (error: any) {
       console.error(error.message);
       toast.error('Erro ao excluir o produto.');
@@ -37,9 +36,9 @@ function Product({ prod }: ProductProps) {
       <div className={ style.info }>
         <h3>{prod.name}</h3>
         <p>{prod.description}</p>
-        <p className={ style.price }>{`R$ ${prod.price}`}</p>
+        <p className={ style.price }>{`R$ ${prod.price.replace('.', ',')}`}</p>
       </div>
-      {user && (
+      {isAuthenticated && (
         <>
           <div className={ style.icons }>
             <span className={ style.icon }>

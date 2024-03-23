@@ -1,78 +1,47 @@
-import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UserType } from '../types/api';
-import useLocalStorage from '../hooks/useLocalStore';
-import MainContext from '../context/MainContext';
 import style from './styles/LoginForm.module.css';
+import { LoginContext } from '../context/LoginContext';
 
 type LoginFormProps = {
   submitName: string,
 };
 
 function LoginForm({ submitName }: LoginFormProps) {
+  const { register, handleSubmit } = useForm();
+  const { login } = useContext(LoginContext);
   const navigate = useNavigate();
-  const { authorization } = useContext(MainContext);
-  const { setUser, getUser } = authorization;
-  const [, setToken] = useLocalStorage('token', '');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const getToken = async (formUser: UserType) => {
+  const handleLogin = async (credentials: any) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/login', formUser);
-
-      if (data.token) {
-        setToken(data.token);
-        return data.token;
-      }
-    } catch ({ response }: any) {
-      return toast.error(response.data.message);
+      await login(credentials);
+      navigate('/');
+    } catch ({ response: { data } }: any) {
+      return toast.error(data.message);
     }
   };
-
-  const handleSubmit = (async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!username || !password) {
-      return toast.warning('Preencha todos os dados');
-    }
-
-    const formUser: UserType = {
-      username,
-      password,
-    };
-
-    const newToken = await getToken(formUser);
-    const lastUser = await getUser(newToken);
-    setUser(lastUser);
-
-    if (newToken && lastUser) {
-      navigate('/');
-      window.location.reload();
-    }
-  });
 
   return (
     <form
       className={ style.form }
-      onSubmit={ handleSubmit }
+      onSubmit={ handleSubmit(handleLogin) }
     >
       <div className={ style.inputs }>
         <input
+          { ...register('username') }
           className={ style.input }
           type="text"
+          name="username"
           placeholder="Nome de Usuário"
-          value={ username }
-          onChange={ ({ target }) => setUsername(target.value) }
         />
         <input
+          { ...register('password') }
           className={ style.input }
           type="password"
+          name="password"
           placeholder="Senha"
-          value={ password }
-          onChange={ ({ target }) => setPassword(target.value) }
         />
       </div>
       <div>

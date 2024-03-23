@@ -8,11 +8,10 @@ import Not from './pages/Not';
 import Layout from './pages/components/Layout';
 import AddProduct from './pages/AddProduct';
 import SignIn from './pages/SignIn';
-import MainContext from './context/MainContext';
+import { LoginContext } from './context/LoginContext';
 
 function App() {
-  const { authorization } = useContext(MainContext);
-  const { user } = authorization;
+  const { isAuthenticated } = useContext(LoginContext);
 
   const title = 'Acesso não autorizado';
 
@@ -25,11 +24,11 @@ function App() {
           <Route index element={ <Home /> } />
           <Route
             path="addproduct"
-            element={ user ? <AddProduct /> : <Not title={ title } /> }
+            element={ isAuthenticated ? <AddProduct /> : <Not title={ title } /> }
           />
           <Route
             path="/edit/:id"
-            element={ user ? <EditProduct /> : <Not title={ title } /> }
+            element={ isAuthenticated ? <EditProduct /> : <Not title={ title } /> }
           />
         </Route>
         <Route path="/*" element={ <Not title="Página não encontrada" /> } />

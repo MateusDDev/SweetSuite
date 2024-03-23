@@ -1,42 +1,51 @@
-version: '3'
+version: '3.9'
 
 services:
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile.frontend
-  #   ports:
-  #     - "4000:4000"
-  #   volumes:
-  #     - ./frontend:/app/frontend
-  #   depends_on:
-  #     - backend
-  #   container_name: frontend
-
-  # backend:
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile.backend
-  #   restart: always
-  #   ports:
-  #     - "5000:5000"
-  #   volumes:
-  #     - ./backend:/app/backend
-  #   depends_on:
-  #     - mysql
-  #   environment:
-  #     MYSQL_HOST: 'mysql'
-  #   env_file:
-  #     - .env
-  #   container_name: backend
-
-  mysql:
-    image: mysql:8.0
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    working_dir: /app/frontend
+    command: dev
     ports:
-      - ${DB_PORT}:3306
+      - 4000:4000
+    volumes:
+      - ./frontend:/app/frontend
+    healthcheck:
+      test: [ "CMD", "lsof", "-t", "-i:4000" ]
+      timeout: 10s
+      retries: 5
+    container_name: frontend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    working_dir: /app/backend
+    # command: dev
+    ports:
+      - 5000:5000
+    volumes:
+      - ./backend:/app/backend
+    user: "1000:1000"
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_HOST: ${DB_HOST}
     env_file:
       - .env
-    container_name: mysql
+    container_name: backend
 
+  db:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    restart: 'always'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 5
+    container_name: mysql

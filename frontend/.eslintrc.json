@@ -1,6 +1,8 @@
 {
   "extends": "@trybe/eslint-config-frontend/typescript",
   "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/control-has-associated-label": "off",
     "no-alert": "off"
   },
   "overrides": [
@@ -27,8 +29,5 @@
         ]
       }
     }
-  ],
-  "parserOptions": {
-    "project": "/home/spec/Downloads/Crud/frontend/tsconfig.json"
-  }
+  ]
 }

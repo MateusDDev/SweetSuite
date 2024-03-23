@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { MainContextType } from '../types/mainContext';
+import { MainContextType } from '../types/MainContext';
 
 const MainContext = createContext({} as MainContextType);
 

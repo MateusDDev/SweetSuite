@@ -2,12 +2,11 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { useContext } from 'react';
 import style from './NavBar.module.css';
-import MainContext from '../../context/MainContext';
 import useLocalStorage from '../../hooks/useLocalStore';
+import { LoginContext } from '../../context/LoginContext';
 
 function NavBar() {
-  const { authorization } = useContext(MainContext);
-  const { user } = authorization;
+  const { isAuthenticated } = useContext(LoginContext);
   const [, , removeToken] = useLocalStorage('token', '');
   const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ function NavBar() {
       </div>
       <div className={ style.links }>
         <NavLink to="/">Home</NavLink>
-        {user && (
+        {isAuthenticated && (
           <>
             <NavLink to="/addproduct">Adicionar Produto</NavLink>
             <FiLogOut className={ style.logOut } onClick={ handleLogOut } />

@@ -4,8 +4,7 @@ import Product from './Product';
 import MainContext from '../context/MainContext';
 
 function Products() {
-  const { api } = useContext(MainContext);
-  const { products, queryData, setQueryData } = api;
+  const { products, queryData, setQueryData } = useContext(MainContext);
 
   const hasResutls = queryData && queryData.length > 0;
   const displayingProducts = hasResutls ? queryData : products;

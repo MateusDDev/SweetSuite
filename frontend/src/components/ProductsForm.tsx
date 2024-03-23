@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import style from './styles/ProductsForm.module.css';
-import { ProductType } from '../types/api';
+import { ProductType } from '../types/ProductTypes';
+import { NewEntity } from '../types/NewEntity';
 
 type FormProps = {
-  playAxios: (prod: ProductType) => Promise<void>,
+  playAxios: (prod: NewEntity<ProductType>) => Promise<void>,
   submitName: string,
 };
 
@@ -17,14 +18,17 @@ function ProductsForm({ playAxios, submitName }: FormProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!name || !description || !price || !quantity) {
+    if (!name || !description || !quantity || !price) {
       return toast.warning('Preencha todos os dados');
     }
 
-    const newProduct: ProductType = {
+    if (!price) setPrice('0');
+    if (!quantity) setQuantity('0');
+
+    const newProduct: NewEntity<ProductType> = {
       name,
       description,
-      price,
+      price: price.replace(',', '.'),
       quantity,
     };
 
@@ -34,6 +38,20 @@ function ProductsForm({ playAxios, submitName }: FormProps) {
     setDescription('');
     setPrice('');
     setQuantity('');
+  };
+
+  const handlePrice = (newPrice: string) => {
+    const regex = /^(?:\d{1,10}(,\d{0,2})?)?$/;
+    if (regex.test(newPrice)) {
+      setPrice(newPrice);
+    }
+  };
+
+  const handleQuantity = (newQuantity: string) => {
+    const regex = /^\d{0,10}$/;
+    if (regex.test(newQuantity)) {
+      setQuantity(newQuantity);
+    }
   };
 
   return (
@@ -56,7 +74,7 @@ function ProductsForm({ playAxios, submitName }: FormProps) {
             type="text"
             name="price"
             value={ price }
-            onChange={ ({ target }) => setPrice(target.value) }
+            onChange={ ({ target }) => handlePrice(target.value) }
           />
         </label>
         <label className={ style.label }>
@@ -66,7 +84,7 @@ function ProductsForm({ playAxios, submitName }: FormProps) {
             type="text"
             name="quantity"
             value={ quantity }
-            onChange={ ({ target }) => setQuantity(target.value) }
+            onChange={ ({ target }) => handleQuantity(target.value) }
           />
         </label>
         <label className={ style.label }>
