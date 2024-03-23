@@ -1,13 +1,12 @@
 import { useContext } from 'react';
 import LoginForm from '../components/LoginForm';
-import MainContext from '../context/MainContext';
 import style from './styles/SignIn.module.css';
+import { LoginContext } from '../context/LoginContext';
 
 function SignIn() {
-  const { authorization } = useContext(MainContext);
-  const { user } = authorization;
+  const { isAuthenticated } = useContext(LoginContext);
 
-  if (user) {
+  if (isAuthenticated) {
     return (
       <div className={ style.logged }>
         <h1>Login realizado</h1>

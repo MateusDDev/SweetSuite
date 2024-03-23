@@ -1,14 +1,15 @@
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
-import { ProductType } from '../types/api';
+import { toast } from 'react-toastify';
 import ProductsForm from '../components/ProductsForm';
 import style from './styles/EditProduct.module.css';
+import { ProductType } from '../types/ProductTypes';
+import api, { requestData } from '../services/request';
+import { NewEntity } from '../types/NewEntity';
 
 function EditProduct() {
   const { id } = useParams();
-  const [product, setProduct] = useState<ProductType>();
+  const [product, setProduct] = useState<ProductType | Partial<NewEntity<ProductType>>>();
 
   useEffect(() => {
     return () => {
@@ -18,33 +19,33 @@ function EditProduct() {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get(`http://localhost:5000/products/${id}`);
-      setProduct(res.data);
+      const prod = await requestData(`products/${id}`);
+      setProduct(prod);
     };
     fetch();
   }, [id, setProduct]);
 
-  const playAxios = async (prod: ProductType) => {
+  const playAxios = async (prod: NewEntity<ProductType>) => {
     try {
-      const res = await axios.put(`http://localhost:5000/products/${id}`, prod);
+      const res = await api.put(`/products/${id}`, prod);
       const { message } = res.data;
 
       setProduct(prod);
       toast.success(message);
-    } catch (error: any) {
-      console.error(error);
-      toast.error('Ocorreu um erro.');
+    } catch ({ response: { data } }: any) {
+      console.error(data);
+      toast.error(data.message);
     }
   };
 
   return (
     <main className={ style.main }>
       <h1>Editar Produto</h1>
-      <ProductsForm playAxios={ playAxios } submitName="Atualizar" />
+      <ProductsForm submitName="Atualizar" playAxios={ playAxios } />
       <div className={ style.product }>
         <h2>{product?.name}</h2>
         <div className={ style.info }>
-          <p>{`R$ ${product?.price}`}</p>
+          <p>{`R$ ${product?.price?.replace('.', ',')}`}</p>
           <p>{`${product?.quantity} disponíveis`}</p>
           <p>{product?.description}</p>
         </div>

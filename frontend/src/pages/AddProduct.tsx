@@ -1,9 +1,10 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import ProductsForm from '../components/ProductsForm';
 import style from './styles/AddProduct.module.css';
-import { ProductType } from '../types/api';
+import { ProductType } from '../types/ProductTypes';
+import api from '../services/request';
+import { NewEntity } from '../types/NewEntity';
 
 function AddProduct() {
   useEffect(() => {
@@ -12,21 +13,20 @@ function AddProduct() {
     };
   }, []);
 
-  const playAxios = async (prod: ProductType) => {
+  const playAxios = async (prod: NewEntity<ProductType>) => {
     try {
-      const res = await axios.post('http://localhost:5000/products', prod);
-      const { message } = res.data;
-      toast.success(message);
-    } catch (error: any) {
-      console.error(error);
-      toast.error('Ocorreu um erro.');
+      await api.post('/products', prod);
+      toast.success('Produto adicionado com sucesso');
+    } catch ({ response: { data } }: any) {
+      console.error(data.message);
+      toast.error(data.message);
     }
   };
 
   return (
     <main className={ style.main }>
       <h1>Novo Produto</h1>
-      <ProductsForm playAxios={ playAxios } submitName="Adicionar" />
+      <ProductsForm submitName="Adicionar" playAxios={ playAxios } />
     </main>
   );
 }
