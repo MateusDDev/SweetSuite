@@ -22,16 +22,17 @@ services:
       context: ./backend
       dockerfile: Dockerfile.backend
     working_dir: /app/backend
-    command: dev
+    # command: dev
     ports:
       - 5000:5000
     volumes:
       - ./backend:/app/backend
+    user: "1000:1000"
     depends_on:
       db:
         condition: service_healthy
     environment:
-      MYSQL_HOST: 'mysql'
+      MYSQL_HOST: ${DB_HOST}
     env_file:
       - .env
     container_name: backend
