@@ -74,4 +74,4 @@ Aplicação desenvolvida para gerenciamento de produtos. Permite criar, visualiz
 
 ## Observações
 
--   Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
+-   Além das etapas descritas anteriormente, o projeto utiliza Docker Compose para facilitar a execução do ambiente de desenvolvimento. Certifique-se de que o Docker e o Docker Compose estejam instalados em sua máquina antes de prosseguir com as etapas acima.
