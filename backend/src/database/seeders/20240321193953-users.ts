@@ -1,5 +1,4 @@
 import { QueryInterface } from 'sequelize';
-import { IUser } from 'src/interfaces/users/IUser';
 import * as bcrypt from 'bcryptjs'
 
 export default {
