@@ -13,11 +13,16 @@ Aplicação desenvolvida para gerenciamento de produtos. Permite criar, visualiz
 ### Tecnologias Utilizadas:
 
 #### Backend:
-[![My Skills](https://skillicons.dev/icons?i=nodejs,ts,docker,mysql)](https://skillicons.dev)
+![image](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![image](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
+![image](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 - Autenticação com JWT: Sistema de autenticação baseado em JSON Web Tokens para controlar o acesso às funcionalidades da aplicação.
 
 #### Frontend:
-[![My Skills](https://skillicons.dev/icons?i=react,ts,docker)](https://skillicons.dev)
+![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![image](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
 
 
 ## Iniciando o projeto localmente
@@ -69,4 +74,4 @@ Aplicação desenvolvida para gerenciamento de produtos. Permite criar, visualiz
 
 ## Observações
 
--   Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
+-   Além das etapas descritas anteriormente, o projeto utiliza Docker Compose para facilitar a execução do ambiente de desenvolvimento. Certifique-se de que o Docker e o Docker Compose estejam instalados em sua máquina antes de prosseguir com as etapas acima.
