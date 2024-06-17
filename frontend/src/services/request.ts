@@ -3,7 +3,7 @@ import { NewEntity } from '../types/NewEntity';
 import { UserType } from '../types/UserTypes';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_REACT_APP_API_URL || 'http://localhost:5000',
 });
 
 export const setToken = (token: string) => {
