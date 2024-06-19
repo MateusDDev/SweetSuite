@@ -28,7 +28,6 @@ function SearchProduct({ setSearchLoading }: SearchProductProps) {
       }
 
       setQueryData(products);
-      setSearchLoading(false);
     } catch ({ response }: any) {
       console.error(response);
       toast.error(response.data.message);
