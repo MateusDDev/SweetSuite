@@ -28,3 +28,14 @@
 .logOut:hover {
   color: rgb(184, 133, 14);
 }
+
+@media screen and (max-width: 730px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 45px 0;
+  }
+}
