@@ -3,6 +3,9 @@
   justify-content: space-between;
   padding: 25px;
   align-items: center;
+  height: 75px;
+  margin-bottom: 25px;
+  background-color: rgba(7, 7, 0, 0.7);
 }
 
 .logo {
@@ -18,10 +21,10 @@
 .logOut {
   cursor: pointer;
   font-size: 22px;
-  color: #FFBA14;
+  color: rgb(255, 186, 20);
   transition: 0.6s;
 }
 
 .logOut:hover {
-  color: #b8850e;
+  color: rgb(184, 133, 14);
 }
