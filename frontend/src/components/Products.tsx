@@ -2,18 +2,21 @@ import { useContext } from 'react';
 import style from './styles/Products.module.css';
 import Product from './Product';
 import MainContext from '../context/MainContext';
+import Loading from './Loading';
 
 function Products() {
   const { products, queryData, setQueryData } = useContext(MainContext);
 
-  const hasResutls = queryData && queryData.length > 0;
-  const displayingProducts = hasResutls ? queryData : products;
+  const hasResults = queryData && queryData.length > 0;
+  const displayingProducts = hasResults ? queryData : products;
+
+  if (displayingProducts.length === 0) return <Loading />;
 
   return (
     <>
       <button
         className={
-        `${style.clear} ${hasResutls ? style.showClear : style.hideClear}`
+        `${style.clear} ${hasResults ? style.showClear : style.hideClear}`
         }
         onClick={ () => setQueryData([]) }
       >
