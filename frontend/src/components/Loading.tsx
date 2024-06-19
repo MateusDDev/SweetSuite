@@ -1,10 +1,16 @@
+import ReactLoading from 'react-loading';
 import style from './styles/Loading.module.css';
-import loadingIcon from '../../public/loadingGif.webp';
 
 function Loading() {
   return (
-    <div className={ style.imgContainer }>
-      <img className={ style.img } src={ loadingIcon } alt="loading icon" />
+    <div className={ style.loadingContainer }>
+      <ReactLoading
+        className={ style.loading }
+        type="bubbles"
+        color="#FFBA14"
+        width={ 120 }
+        height={ 120 }
+      />
     </div>
   );
 }
