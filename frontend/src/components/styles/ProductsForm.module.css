@@ -45,3 +45,17 @@
   margin-top: 19px;
   margin-right: 30%;
 }
+
+@media screen and (max-width: 730px) {
+  .form {
+    width: 80%;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .btnContainer {
+    width: 100%;
+  }
+}
